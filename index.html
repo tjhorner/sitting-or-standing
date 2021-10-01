@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sitting or Standing?</title>
+  <style>
+    body, html {
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      font-family: "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    .content {
+      display: flex;
+      height: 100%;
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 3em;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: #1d1d1d;
+        color: white;
+      }
+
+      a {
+        color: white;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <span id="status">Dunno.</span>
+  </div>
+  <script>
+    async function load() {
+      const resp = await fetch("https://api.horner.tj", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ query: "{home{deskHeight}}" })
+      })
+
+      const { data } = await resp.json()
+      const { deskHeight } = data.home
+
+      const status = document.getElementById("status")
+      status.innerText = deskHeight > 40 ? "Standing." : "Sitting."
+    }
+
+    load()
+  </script>
+</body>
+</html>
