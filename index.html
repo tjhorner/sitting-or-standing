@@ -25,6 +25,12 @@
       font-size: 3em;
     }
 
+    #subtitle {
+      font-size: 0.5em;
+      color: #a9a9a9;
+      margin-top: 5px;
+    }
+
     @media (prefers-color-scheme: dark) {
       body {
         background: #1d1d1d;
@@ -39,7 +45,8 @@
 </head>
 <body>
   <div class="content">
-    <span id="status">Dunno.</span>
+    <span id="status">Dunno</span>
+    <span id="subtitle"></span>
   </div>
   <script>
     async function load() {
@@ -55,7 +62,8 @@
       const { deskHeight } = data.home
 
       const status = document.getElementById("status")
-      status.innerText = deskHeight > 40 ? "Standing." : "Sitting."
+      status.innerText = deskHeight > 40 ? "Standing" : "Sitting"
+      subtitle.innerText = `Desk is at ${deskHeight}in`
     }
 
     load()
